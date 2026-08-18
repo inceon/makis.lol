@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07111a" />
+    <meta name="description" content="Makis — a Minecraft world built for the good kind of chaos." />
+    <title>Makis — Minecraft, our way.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <header class="site-header" id="top">
+      <a class="brand" href="#top" aria-label="Makis home"><span class="brand-mark"></span>MAKIS</a>
+      <nav aria-label="Main navigation">
+        <a href="#world">The world</a>
+        <a href="#play">How we play</a>
+        <a href="#join">Join us</a>
+      </nav>
+      <a class="nav-join" href="#join">Enter world <span>↗</span></a>
+      <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-image" aria-hidden="true"></div>
+        <div class="hero-shade" aria-hidden="true"></div>
+        <div class="hero-content">
+          <p class="eyebrow reveal">A Minecraft survival world</p>
+          <h1 class="reveal" id="hero-title">MAKIS<span class="period">.</span></h1>
+          <p class="hero-copy reveal">A small world with big plans. Build something you want to come back to.</p>
+          <div class="hero-actions reveal">
+            <a class="button button-primary" href="#join">Find your spawn <span>→</span></a>
+            <a class="text-link" href="#world">Explore the world <span>↓</span></a>
+          </div>
+        </div>
+        <div class="hero-footer reveal">
+          <p>Survival <i></i> Java edition <i></i> 1.21+</p>
+          <p class="scroll-note">Scroll to descend <span>↓</span></p>
+        </div>
+      </section>
+
+      <section class="intro section" id="world">
+        <div class="section-label reveal"><span>01</span> The world</div>
+        <div class="intro-statement reveal">
+          <p class="kicker">No resets. No rush.</p>
+          <h2>Just a world that gets <em>better</em> the longer we live in it.</h2>
+        </div>
+        <div class="intro-detail reveal">
+          <p>Makis is a vanilla-minded survival server for people who like the slow burn: rough first shelters, ambitious community projects, and accidentally staying up too late because one more block needs placing.</p>
+          <a class="text-link" href="#play">See what’s happening <span>→</span></a>
+        </div>
+      </section>
+
+      <section class="feature-band" aria-label="The Makis ethos">
+        <div class="feature-visual reveal">
+          <div class="pixel-sun"></div>
+          <div class="pixel-hill hill-one"></div><div class="pixel-hill hill-two"></div>
+          <div class="feature-caption">Northern<br />outpost</div>
+        </div>
+        <div class="feature-copy reveal">
+          <span class="section-label"><span>02</span> Built together</span>
+          <h2>There’s always<br />room for one<br />more idea.</h2>
+          <p>Make your corner of the map yours. Then help make the rest of it unforgettable.</p>
+        </div>
+      </section>
+
+      <section class="play section" id="play">
+        <div class="section-label reveal"><span>03</span> How we play</div>
+        <div class="play-heading reveal"><h2>The good stuff<br />happens <em>after</em> spawn.</h2></div>
+        <div class="play-list">
+          <article class="play-item reveal"><span class="item-number">01</span><div><h3>Build with intent</h3><p>From a hillside cabin to a city in the clouds, every build adds to the story.</p></div><span class="item-arrow">↗</span></article>
+          <article class="play-item reveal"><span class="item-number">02</span><div><h3>Make it social</h3><p>Trade, explore, start a project, or just keep each other company while mining.</p></div><span class="item-arrow">↗</span></article>
+          <article class="play-item reveal"><span class="item-number">03</span><div><h3>Keep it chill</h3><p>Respect the world and the people in it. That is the only rule worth remembering.</p></div><span class="item-arrow">↗</span></article>
+        </div>
+      </section>
+
+      <section class="join" id="join">
+        <div class="join-sky" aria-hidden="true"></div>
+        <div class="join-content reveal">
+          <p class="eyebrow">The portal is open</p>
+          <h2>See you<br />on the <em>other</em> side.</h2>
+          <p class="join-copy">Bring curiosity, good taste in blocks, and a sense of humour.</p>
+          <div class="server-address" role="group" aria-label="Server address">
+            <div><span>SERVER ADDRESS</span><strong id="server-ip">play.makis.lol</strong></div>
+            <button id="copy-ip" type="button">Copy <span>↗</span></button>
+          </div>
+          <p class="copy-feedback" id="copy-feedback" aria-live="polite"></p>
+        </div>
+        <footer>
+          <a class="brand" href="#top"><span class="brand-mark"></span>MAKIS</a>
+          <p>Made for the long game. © 2026</p>
+          <a href="#top">Back to top ↑</a>
+        </footer>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
