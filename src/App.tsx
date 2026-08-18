@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 
-const SERVER_ADDRESS = 'play.makis.lol';
+const MAKIS_STACK = 'JavaScript · Node.js · APIs';
 
 type SceneVariables = CSSProperties & Record<`--${string}`, string>;
 
@@ -50,8 +50,8 @@ function Header({ ambient, onToggleAmbient }: { ambient: boolean; onToggleAmbien
   return (
     <header className="header">
       <a className="brand" href="/" aria-label="Makis home"><span className="brand-cube" />MAKIS</a>
-      <p className="status"><i /> Survival world online</p>
-      <button className="sound-button" type="button" onClick={onToggleAmbient} aria-label="Toggle ambient mode" aria-pressed={ambient}>
+      <p className="status"><i /> JavaScript backend developer</p>
+      <button className="sound-button" type="button" onClick={onToggleAmbient} aria-label="Toggle ambient glow" aria-pressed={ambient}>
         <span /><span /><span />
       </button>
     </header>
@@ -60,11 +60,40 @@ function Header({ ambient, onToggleAmbient }: { ambient: boolean; onToggleAmbien
 
 function Player() {
   return (
-    <section className="player" aria-label="Makis, your guide to the world">
+    <section className="player" aria-label="Makis, JavaScript backend developer">
       <div className="player-aura" aria-hidden="true" />
       <img src="/assets/makis-character.png" alt="Makis, a block-style character ready for adventure" draggable={false} />
-      <p className="player-name"><span /> Makis <small>Founder</small></p>
+      <p className="player-name"><span /> Makis <small>Backend dev</small></p>
     </section>
+  );
+}
+
+type Companion = 'animals' | 'villagers';
+
+function Companion({
+  id,
+  active,
+  onClick,
+}: {
+  id: Companion;
+  active: boolean;
+  onClick: () => void;
+}) {
+  const isAnimals = id === 'animals';
+  const label = isAnimals ? 'Лисичка та вівця' : 'Пекар і садівниця';
+  const detail = isAnimals ? 'Натисни — вони привітаються.' : 'Натисни — вони покажуть свій настрій.';
+
+  return (
+    <button
+      className={`companion companion-${id}${active ? ' is-active' : ''}`}
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      aria-label={`${label}. ${detail}`}
+    >
+      <img src={isAnimals ? '/assets/makis-animals-v1.png' : '/assets/makis-villagers-v1.png'} alt="" draggable={false} />
+      <span className="companion-label"><b>{label}</b><small>{active ? (isAnimals ? 'Пік-пік! ✦' : 'Свіжий хліб! ✦') : detail}</small></span>
+    </button>
   );
 }
 
@@ -72,23 +101,24 @@ export function App() {
   const { motion, handlePointerMove, resetMotion } = useSceneMotion();
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'fallback'>('idle');
   const [ambient, setAmbient] = useState(false);
+  const [activeCompanion, setActiveCompanion] = useState<Companion | null>(null);
 
-  const copyAddress = async () => {
+  const copyStack = async () => {
     try {
-      await navigator.clipboard.writeText(SERVER_ADDRESS);
+      await navigator.clipboard.writeText(MAKIS_STACK);
       setCopyState('copied');
     } catch {
       setCopyState('fallback');
     }
   };
 
-  const buttonLabel = copyState === 'copied' ? 'Address copied' : 'Enter the world';
+  const buttonLabel = copyState === 'copied' ? 'Стек скопійовано' : 'Скопіювати стек';
   const feedback = copyState === 'copied'
-    ? 'Paste it into Minecraft and join us.'
-    : copyState === 'fallback' ? `Server address: ${SERVER_ADDRESS}` : '';
+    ? 'Готово — можна зберегти для наступного проєкту.'
+    : copyState === 'fallback' ? `Стек: ${MAKIS_STACK}` : '';
 
   return (
-    <main className="scene" style={motion} onPointerMove={handlePointerMove} onPointerLeave={resetMotion}>
+    <main className={`scene${ambient ? ' is-ambient' : ''}`} style={motion} onPointerMove={handlePointerMove} onPointerLeave={resetMotion}>
       <div className="world" aria-hidden="true" />
       <div className="world-wash" aria-hidden="true" />
       <div className="sun-glow" aria-hidden="true" />
@@ -99,23 +129,25 @@ export function App() {
       <Header ambient={ambient} onToggleAmbient={() => setAmbient((current) => !current)} />
 
       <section className="intro" aria-labelledby="title">
-        <p className="eyebrow">A Minecraft survival world</p>
-        <h1 id="title">MAKE<br />YOUR<br /><em>MARK.</em></h1>
-        <p className="summary">The blocks are waiting. Build the thing you cannot stop thinking about.</p>
-        <button className="join-button" type="button" onClick={copyAddress}><span>{buttonLabel}</span><b>↗</b></button>
+        <p className="eyebrow">JavaScript · Backend · Coffee</p>
+        <h1 id="title">КОД.<br />КАВА.<br /><em>СЕНС.</em></h1>
+        <p className="summary">Макіс пише JavaScript для надійних бекендів і вірить, що найкращі рішення починаються з кавусі.</p>
+        <button className="join-button" type="button" onClick={copyStack}><span>{buttonLabel}</span><b>↗</b></button>
         <p className="feedback" aria-live="polite">{feedback}</p>
       </section>
 
       <Player />
+      <Companion id="animals" active={activeCompanion === 'animals'} onClick={() => setActiveCompanion((current) => current === 'animals' ? null : 'animals')} />
+      <Companion id="villagers" active={activeCompanion === 'villagers'} onClick={() => setActiveCompanion((current) => current === 'villagers' ? null : 'villagers')} />
 
-      <aside className="server-card" aria-label="Server address">
-        <p>JAVA EDITION · 1.21+</p>
-        <strong>{SERVER_ADDRESS}</strong>
-        <span>Click “Enter” to copy</span>
+      <aside className="server-card" aria-label="Makis profile">
+        <p>NOW BREWING</p>
+        <strong>Node.js / APIs / DX</strong>
+        <span>Спокійний код, міцна кава</span>
       </aside>
 
-      <p className="pointer-hint"><span>↗</span> Move your cursor</p>
-      <footer><span>© 2026 Makis</span><span>Built for the long game</span></footer>
+      <p className="pointer-hint"><span>↗</span> Рухай курсор · натискай героїв</p>
+      <footer><span>© 2026 Makis</span><span>Built with JavaScript &amp; кавуся</span></footer>
     </main>
   );
 }
