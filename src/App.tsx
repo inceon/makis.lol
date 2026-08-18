@@ -70,30 +70,50 @@ function Player() {
 
 type Companion = 'farmer' | 'librarian' | 'sheep' | 'fox';
 
-const companions: Record<Companion, { label: string; detail: string; greeting: string; image: string }> = {
+const companions: Record<Companion, {
+  label: string;
+  detail: string;
+  greeting: string;
+  image: string;
+  role: string;
+  bio: string;
+  stats: Array<[string, string]>;
+}> = {
   farmer: {
-    label: 'Village farmer',
-    detail: 'Tap to hear a familiar hum.',
+    label: 'Фермер села',
+    detail: 'Клікни, щоб відкрити профіль.',
     greeting: 'Hmmmm! ✦',
     image: '/assets/makis-villager-farmer-v1.png',
+    role: 'Senior crop engineer',
+    bio: 'Деплоїть пшеницю щодня о 06:00. Production не падає, бо компост — найкращий rollback.',
+    stats: [['Stack', 'Hoe.js + bone meal'], ['Uptime', '99.9% дощу'], ['PR review', '«Хммм»']],
   },
   librarian: {
-    label: 'Village librarian',
-    detail: 'Tap to hear a familiar hum.',
+    label: 'Бібліотекар села',
+    detail: 'Клікни, щоб відкрити профіль.',
     greeting: 'Hmmmm! ✦',
     image: '/assets/makis-villager-librarian-v1.png',
+    role: 'Staff knowledge engineer',
+    bio: 'Знає всі API, але документацію видає лише за смарагди. Його кеш — це полиця з книжками.',
+    stats: [['Search engine', 'VillagerDB'], ['Cache policy', 'Librarian LRU'], ['Pricing', '1 emerald / query']],
   },
   sheep: {
-    label: 'Sheep',
-    detail: 'Tap to hear a soft bleat.',
+    label: 'Вівця',
+    detail: 'Клікни, щоб відкрити профіль.',
     greeting: 'Baa! ✦',
     image: '/assets/makis-sheep-v1.png',
+    role: 'Cloud infrastructure',
+    bio: 'М’яка, горизонтально масштабується й регулярно віддає ресурси. Ніхто не бачив її без whitepaper.',
+    stats: [['Cloud provider', 'WoolCompute'], ['Autoscaling', 'після стрижки'], ['Logs', 'баа-баа-баа']],
   },
   fox: {
-    label: 'Red fox',
-    detail: 'Tap to hear a curious chirp.',
+    label: 'Руда лисиця',
+    detail: 'Клікни, щоб відкрити профіль.',
     greeting: 'Chirp! ✦',
     image: '/assets/makis-fox-v1.png',
+    role: 'Security engineer',
+    bio: 'Знаходить дірки в паркані швидше, ніж команда знаходить баг у проді. Нуль довіри, максимум хвоста.',
+    stats: [['Threat model', 'курник'], ['Zero-day', 'щовівторка'], ['VPN', 'Very Pawsome Network']],
   },
 };
 
@@ -122,11 +142,44 @@ function Companion({
   );
 }
 
+function CompanionProfile({ id, onClose }: { id: Companion; onClose: () => void }) {
+  const companion = companions[id];
+
+  return (
+    <section className="companion-profile" role="dialog" aria-modal="true" aria-labelledby="companion-title">
+      <div className="profile-backdrop" aria-hidden="true" onClick={onClose} />
+      <div className="profile-art" aria-hidden="true">
+        <div className="profile-grid" />
+        <img src={companion.image} alt="" draggable={false} />
+      </div>
+      <div className="profile-content">
+        <button className="profile-close" type="button" onClick={onClose} autoFocus aria-label="Закрити профіль">×</button>
+        <p className="profile-kicker">// entity.profile</p>
+        <h2 id="companion-title">{companion.label}</h2>
+        <p className="profile-role">{companion.role}</p>
+        <p className="profile-bio">{companion.bio}</p>
+        <dl className="profile-stats">
+          {companion.stats.map(([term, value]) => <div key={term}><dt>{term}</dt><dd>{value}</dd></div>)}
+        </dl>
+        <p className="profile-footer"><span /> status: online, трохи піксельний</p>
+      </div>
+    </section>
+  );
+}
+
 export function App() {
   const { motion, handlePointerMove, resetMotion } = useSceneMotion();
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'fallback'>('idle');
   const [ambient, setAmbient] = useState(false);
   const [activeCompanion, setActiveCompanion] = useState<Companion | null>(null);
+
+  useEffect(() => {
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setActiveCompanion(null);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, []);
 
   const copyStack = async () => {
     try {
@@ -173,8 +226,9 @@ export function App() {
         <span>Calm code, strong coffee</span>
       </aside>
 
-      <p className="pointer-hint"><span>↗</span> Move your cursor · tap the characters</p>
+      <p className="pointer-hint"><span>↗</span> Рухай курсор · клікай персонажів</p>
       <footer><span>© 2026 Makis</span><span>Built with JavaScript &amp; coffee</span></footer>
+      {activeCompanion && <CompanionProfile id={activeCompanion} onClose={() => setActiveCompanion(null)} />}
     </main>
   );
 }
