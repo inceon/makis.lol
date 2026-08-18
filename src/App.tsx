@@ -69,7 +69,7 @@ function Player({ level, reaction, onFeed }: { level: number; reaction: Reaction
     <span className="player-aura" aria-hidden="true" />
     <img src="/assets/makis-character.png" alt="Makis, a block-style character ready for adventure" draggable={false} />
     <span className="player-name"><i /> Makis <small>{level ? 'Coffee mode' : 'Backend dev'}</small></span>
-    {level === 3 && <span className="barbell-reward" aria-label="Качалка-трофей"><i /><b /><i /></span>}
+    {level === 3 && <span className="sausage-reward" aria-label="Палка ковбаси-трофей"><i /><b /></span>}
     <span className="entity-meter"><Hearts level={level} /></span><Reward event={reaction} target="makis" />
   </button>;
 }
