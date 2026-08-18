@@ -80,8 +80,8 @@ function Companion({
   onClick: () => void;
 }) {
   const isAnimals = id === 'animals';
-  const label = isAnimals ? 'Лисичка та вівця' : 'Пекар і садівниця';
-  const detail = isAnimals ? 'Натисни — вони привітаються.' : 'Натисни — вони покажуть свій настрій.';
+  const label = isAnimals ? 'Fox & sheep' : 'Village folk';
+  const detail = isAnimals ? 'Tap to hear their greeting.' : 'Tap to hear their familiar hum.';
 
   return (
     <button
@@ -91,8 +91,8 @@ function Companion({
       aria-pressed={active}
       aria-label={`${label}. ${detail}`}
     >
-      <img src={isAnimals ? '/assets/makis-animals-v1.png' : '/assets/makis-villagers-v1.png'} alt="" draggable={false} />
-      <span className="companion-label"><b>{label}</b><small>{active ? (isAnimals ? 'Пік-пік! ✦' : 'Свіжий хліб! ✦') : detail}</small></span>
+      <img src={isAnimals ? '/assets/makis-animals-v1.png' : '/assets/makis-villagers-v2.png'} alt="" draggable={false} />
+      <span className="companion-label"><b>{label}</b><small>{active ? (isAnimals ? 'Beep-beep! ✦' : 'Hmmmm! ✦') : detail}</small></span>
     </button>
   );
 }
@@ -112,10 +112,10 @@ export function App() {
     }
   };
 
-  const buttonLabel = copyState === 'copied' ? 'Стек скопійовано' : 'Скопіювати стек';
+  const buttonLabel = copyState === 'copied' ? 'Stack copied' : 'Copy stack';
   const feedback = copyState === 'copied'
-    ? 'Готово — можна зберегти для наступного проєкту.'
-    : copyState === 'fallback' ? `Стек: ${MAKIS_STACK}` : '';
+    ? 'Ready to keep for your next project.'
+    : copyState === 'fallback' ? `Stack: ${MAKIS_STACK}` : '';
 
   return (
     <main className={`scene${ambient ? ' is-ambient' : ''}`} style={motion} onPointerMove={handlePointerMove} onPointerLeave={resetMotion}>
@@ -130,8 +130,8 @@ export function App() {
 
       <section className="intro" aria-labelledby="title">
         <p className="eyebrow">JavaScript · Backend · Coffee</p>
-        <h1 id="title">КОД.<br />КАВА.<br /><em>СЕНС.</em></h1>
-        <p className="summary">Макіс пише JavaScript для надійних бекендів і вірить, що найкращі рішення починаються з кавусі.</p>
+        <h1 id="title">CODE.<br />COFFEE.<br /><em>CLARITY.</em></h1>
+        <p className="summary">Makis writes JavaScript for dependable backends and believes the best solutions begin with good coffee.</p>
         <button className="join-button" type="button" onClick={copyStack}><span>{buttonLabel}</span><b>↗</b></button>
         <p className="feedback" aria-live="polite">{feedback}</p>
       </section>
@@ -143,11 +143,11 @@ export function App() {
       <aside className="server-card" aria-label="Makis profile">
         <p>NOW BREWING</p>
         <strong>Node.js / APIs / DX</strong>
-        <span>Спокійний код, міцна кава</span>
+        <span>Calm code, strong coffee</span>
       </aside>
 
-      <p className="pointer-hint"><span>↗</span> Рухай курсор · натискай героїв</p>
-      <footer><span>© 2026 Makis</span><span>Built with JavaScript &amp; кавуся</span></footer>
+      <p className="pointer-hint"><span>↗</span> Move your cursor · tap the characters</p>
+      <footer><span>© 2026 Makis</span><span>Built with JavaScript &amp; coffee</span></footer>
     </main>
   );
 }
