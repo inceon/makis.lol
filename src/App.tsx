@@ -68,7 +68,34 @@ function Player() {
   );
 }
 
-type Companion = 'animals' | 'villagers';
+type Companion = 'farmer' | 'librarian' | 'sheep' | 'fox';
+
+const companions: Record<Companion, { label: string; detail: string; greeting: string; image: string }> = {
+  farmer: {
+    label: 'Village farmer',
+    detail: 'Tap to hear a familiar hum.',
+    greeting: 'Hmmmm! ✦',
+    image: '/assets/makis-villager-farmer-v1.png',
+  },
+  librarian: {
+    label: 'Village librarian',
+    detail: 'Tap to hear a familiar hum.',
+    greeting: 'Hmmmm! ✦',
+    image: '/assets/makis-villager-librarian-v1.png',
+  },
+  sheep: {
+    label: 'Sheep',
+    detail: 'Tap to hear a soft bleat.',
+    greeting: 'Baa! ✦',
+    image: '/assets/makis-sheep-v1.png',
+  },
+  fox: {
+    label: 'Red fox',
+    detail: 'Tap to hear a curious chirp.',
+    greeting: 'Chirp! ✦',
+    image: '/assets/makis-fox-v1.png',
+  },
+};
 
 function Companion({
   id,
@@ -79,9 +106,7 @@ function Companion({
   active: boolean;
   onClick: () => void;
 }) {
-  const isAnimals = id === 'animals';
-  const label = isAnimals ? 'Fox & sheep' : 'Village folk';
-  const detail = isAnimals ? 'Tap to hear their greeting.' : 'Tap to hear their familiar hum.';
+  const companion = companions[id];
 
   return (
     <button
@@ -89,10 +114,10 @@ function Companion({
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      aria-label={`${label}. ${detail}`}
+      aria-label={`${companion.label}. ${companion.detail}`}
     >
-      <img src={isAnimals ? '/assets/makis-animals-v1.png' : '/assets/makis-villagers-v2.png'} alt="" draggable={false} />
-      <span className="companion-label"><b>{label}</b><small>{active ? (isAnimals ? 'Beep-beep! ✦' : 'Hmmmm! ✦') : detail}</small></span>
+      <img src={companion.image} alt="" draggable={false} />
+      <span className="companion-label"><b>{companion.label}</b><small>{active ? companion.greeting : companion.detail}</small></span>
     </button>
   );
 }
@@ -137,8 +162,10 @@ export function App() {
       </section>
 
       <Player />
-      <Companion id="animals" active={activeCompanion === 'animals'} onClick={() => setActiveCompanion((current) => current === 'animals' ? null : 'animals')} />
-      <Companion id="villagers" active={activeCompanion === 'villagers'} onClick={() => setActiveCompanion((current) => current === 'villagers' ? null : 'villagers')} />
+      <Companion id="farmer" active={activeCompanion === 'farmer'} onClick={() => setActiveCompanion((current) => current === 'farmer' ? null : 'farmer')} />
+      <Companion id="librarian" active={activeCompanion === 'librarian'} onClick={() => setActiveCompanion((current) => current === 'librarian' ? null : 'librarian')} />
+      <Companion id="sheep" active={activeCompanion === 'sheep'} onClick={() => setActiveCompanion((current) => current === 'sheep' ? null : 'sheep')} />
+      <Companion id="fox" active={activeCompanion === 'fox'} onClick={() => setActiveCompanion((current) => current === 'fox' ? null : 'fox')} />
 
       <aside className="server-card" aria-label="Makis profile">
         <p>NOW BREWING</p>
